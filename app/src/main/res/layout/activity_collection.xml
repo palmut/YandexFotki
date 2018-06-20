@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".MainActivity">
+    tools:context=".CollectionActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -14,11 +14,12 @@
         android:fitsSystemWindows="true">
 
         <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:title="@string/title_collections">
+            app:title="@string/title_collection">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -35,21 +36,11 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <android.support.v4.widget.NestedScrollView
+        <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:animateLayoutChanges="true">
-
-            <LinearLayout
-                android:id="@+id/collectionList"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:divider="@drawable/divider"
-                android:orientation="vertical"
-                android:paddingEnd="@dimen/margin"
-                android:paddingStart="@dimen/margin"
-                android:showDividers="beginning|middle"/>
-        </android.support.v4.widget.NestedScrollView>
+            android:orientation="vertical"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
     </android.support.v4.widget.SwipeRefreshLayout>
 
 </android.support.design.widget.CoordinatorLayout>

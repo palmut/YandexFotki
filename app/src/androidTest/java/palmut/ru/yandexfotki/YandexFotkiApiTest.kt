@@ -1,2 +1,0 @@
-package palmut.ru.yandexfotki
-

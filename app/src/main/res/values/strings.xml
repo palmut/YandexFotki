@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">YandexFotki</string>
     <string name="title_collections">Коллекции</string>
+    <string name="title_collection">Коллекция</string>
 </resources>

@@ -14,6 +14,20 @@ class ApiTest {
                 .subscribeOn(Schedulers.single())
                 .blockingGet()
 
-        assertEquals("","alekna на Яндекс.Фотках", user.title)
+        assertEquals("user title does not match", EXPECTED_TITLE, user.title)
+    }
+
+    @Test
+    fun testCollection() {
+        val collection = YandexFotkiRepo()
+                .getCollection("alekna", "photos")
+                .subscribeOn(Schedulers.single())
+                .blockingGet()
+
+        assertEquals("collection title does not match", EXPECTED_TITLE, collection.title)
+    }
+
+    companion object {
+        private const val EXPECTED_TITLE ="alekna на Яндекс.Фотках"
     }
 }

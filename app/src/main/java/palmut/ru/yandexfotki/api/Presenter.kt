@@ -1,22 +1,34 @@
 package palmut.ru.yandexfotki.api
 
+import io.reactivex.Single
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
+class YandexFotkiUserPresenter(private val repo: YandexFotkiApi, view: View<User>)
+    : YandexFotkiPresenter<User>(view) {
 
-class YandexFotkiPresenter(private val repo: YandexFotkiApi, var view: View?) {
+    fun loadUser(name: String) = executeRequest { repo.getUser(name) }
+}
 
-    fun loadUser(name: String) {
-        repo.getUser(name)
+class YandexFotkiCollectionPresenter(private val repo: YandexFotkiApi, view: View<Collection>)
+    : YandexFotkiPresenter<Collection>(view) {
+
+    fun loadCollection(user: String, name: String) = executeRequest { repo.getCollection(user, name) }
+}
+
+open class YandexFotkiPresenter<T>(var view: View<T>?) {
+
+    fun executeRequest(repoRequest: () -> Single<T>) {
+        repoRequest()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : SingleObserver<User> {
-                    override fun onSuccess(user: User) {
-                        view?.also {
-                            it.showProgress(false)
-                            it.showUser(user)
+                .subscribe(object : SingleObserver<T> {
+                    override fun onSuccess(result: T) {
+                        view?.run {
+                            showProgress(false)
+                            showResult(result)
                         }
                     }
 
@@ -25,18 +37,18 @@ class YandexFotkiPresenter(private val repo: YandexFotkiApi, var view: View?) {
                     }
 
                     override fun onError(e: Throwable) {
-                        view?.also {
-                            it.showProgress(false)
-                            it.showError(e)
+                        view?.run {
+                            showProgress(false)
+                            showError(e)
                         }
                     }
 
                 })
     }
 
-    interface View {
+    interface View<T> {
         fun showProgress(state: Boolean)
-        fun showUser(user: User)
+        fun showResult(result: T)
         fun showError(e: Throwable)
     }
 }
