@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_collection.*
 import kotlinx.android.synthetic.main.activity_collection.swipeRefresh
 import kotlinx.android.synthetic.main.activity_collection.toolbar
+import kotlinx.android.synthetic.main.activity_collection.recyclerView
 import kotlinx.android.synthetic.main.activity_main.*
 import palmut.ru.yandexfotki.api.Collection
 import palmut.ru.yandexfotki.api.YandexFotkiCollectionPresenter
@@ -19,6 +20,7 @@ class CollectionActivity : AppCompatActivity(), YandexFotkiPresenter.View<Collec
     private val presenter = YandexFotkiCollectionPresenter(YandexFotkiRepo(), this)
     private val user by lazy { intent.getStringExtra(EXTRA_USER) }
     private val name by lazy { intent.getStringExtra(EXTRA_NAME) }
+    private val adapter = ImageAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +31,7 @@ class CollectionActivity : AppCompatActivity(), YandexFotkiPresenter.View<Collec
             setDisplayHomeAsUpEnabled(true)
         }
         swipeRefresh.setOnRefreshListener(::refresh)
+        recyclerView.adapter = adapter
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -47,6 +50,7 @@ class CollectionActivity : AppCompatActivity(), YandexFotkiPresenter.View<Collec
 
     override fun showResult(result: Collection) {
         collapsingToolbar.title = result.title
+        adapter.submitList(result.entries.toList())
     }
 
     override fun showError(e: Throwable) {

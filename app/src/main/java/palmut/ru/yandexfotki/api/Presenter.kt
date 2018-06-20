@@ -20,7 +20,7 @@ class YandexFotkiCollectionPresenter(private val repo: YandexFotkiApi, view: Vie
 
 open class YandexFotkiPresenter<T>(var view: View<T>?) {
 
-    fun executeRequest(repoRequest: () -> Single<T>) {
+    protected fun executeRequest(repoRequest: () -> Single<T>) {
         repoRequest()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
