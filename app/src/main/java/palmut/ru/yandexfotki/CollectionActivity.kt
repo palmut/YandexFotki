@@ -17,7 +17,6 @@ import palmut.ru.yandexfotki.api.YandexFotkiRepo
 
 class CollectionActivity : AppCompatActivity(), YandexFotkiPresenter.View<Collection> {
 
-    private val imageAdapter = ImageAdapter()
     private val presenter = YandexFotkiCollectionPresenter(YandexFotkiRepo(), this)
     private val user get() = intent.getStringExtra(EXTRA_USER)
     private val name get() = intent.getStringExtra(EXTRA_NAME)
@@ -34,7 +33,7 @@ class CollectionActivity : AppCompatActivity(), YandexFotkiPresenter.View<Collec
 
         recyclerView.apply {
             addItemDecoration(ScaleDecoration())
-            adapter = imageAdapter
+            adapter = ImageAdapter(resources.displayMetrics.widthPixels)
         }
 
         swipeRefresh.setOnRefreshListener(::refresh)
@@ -56,7 +55,7 @@ class CollectionActivity : AppCompatActivity(), YandexFotkiPresenter.View<Collec
 
     override fun showResult(result: Collection) {
         collapsingToolbar.title = result.title
-        imageAdapter.submitList(result.entries.toList())
+        (recyclerView.adapter as ImageAdapter).submitList(result.entries.toList())
     }
 
     override fun showError(e: Throwable) {
