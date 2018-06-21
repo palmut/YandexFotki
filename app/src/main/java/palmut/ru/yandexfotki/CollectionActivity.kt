@@ -17,21 +17,27 @@ import palmut.ru.yandexfotki.api.YandexFotkiRepo
 
 class CollectionActivity : AppCompatActivity(), YandexFotkiPresenter.View<Collection> {
 
+    private val imageAdapter = ImageAdapter()
     private val presenter = YandexFotkiCollectionPresenter(YandexFotkiRepo(), this)
-    private val user by lazy { intent.getStringExtra(EXTRA_USER) }
-    private val name by lazy { intent.getStringExtra(EXTRA_NAME) }
-    private val adapter = ImageAdapter()
+    private val user get() = intent.getStringExtra(EXTRA_USER)
+    private val name get() = intent.getStringExtra(EXTRA_NAME)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_collection)
+
         setSupportActionBar(toolbar)
-        with(supportActionBar!!) {
+        supportActionBar?.apply {
             setHomeButtonEnabled(true)
             setDisplayHomeAsUpEnabled(true)
         }
+
+        recyclerView.apply {
+            addItemDecoration(ScaleDecoration())
+            adapter = imageAdapter
+        }
+
         swipeRefresh.setOnRefreshListener(::refresh)
-        recyclerView.adapter = adapter
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -50,7 +56,7 @@ class CollectionActivity : AppCompatActivity(), YandexFotkiPresenter.View<Collec
 
     override fun showResult(result: Collection) {
         collapsingToolbar.title = result.title
-        adapter.submitList(result.entries.toList())
+        imageAdapter.submitList(result.entries.toList())
     }
 
     override fun showError(e: Throwable) {

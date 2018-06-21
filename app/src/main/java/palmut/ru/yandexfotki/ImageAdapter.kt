@@ -17,6 +17,7 @@ private val diffCallback = object : DiffUtil.ItemCallback<Entry>() {
 }
 
 class ImageAdapter : ListAdapter<Entry, ImageViewHolder>(diffCallback) {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
         val cardView = LayoutInflater.from(parent.context).inflate(R.layout.card_item, parent, false)
         return ImageViewHolder(cardView)

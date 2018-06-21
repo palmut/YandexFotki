@@ -8,4 +8,4 @@ data class Image(val width: Int, val href: String, val height: Int)
 
 data class Entry(val edited: String, val updated: String, val xxx: Boolean, val img: Map<String, Image>?, val id: String)
 
-class Collection(val updated: String, val author: String, val title: String, val entries: Array<Entry>)
+class Collection(val title: String, val entries: Array<Entry>)

@@ -18,7 +18,9 @@ class MainActivity : AppCompatActivity(), YandexFotkiPresenter.View<User> {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         setSupportActionBar(toolbar)
+
         swipeRefresh.setOnRefreshListener(::refresh)
     }
 
@@ -54,8 +56,8 @@ class MainActivity : AppCompatActivity(), YandexFotkiPresenter.View<User> {
     }
 
     private fun showCollection(collection: CollectionListItem) {
-        val name = Uri.parse(collection.href).lastPathSegment
-        startActivity(CollectionActivity.startIntent(this, user, name))
+        val collectionName = Uri.parse(collection.href).lastPathSegment
+        startActivity(CollectionActivity.startIntent(this, user, collectionName))
     }
 
     override fun showError(e: Throwable) {

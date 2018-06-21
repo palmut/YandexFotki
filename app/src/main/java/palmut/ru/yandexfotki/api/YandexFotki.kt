@@ -21,7 +21,7 @@ interface YandexFotkiApi {
 
 class YandexFotkiRepo : YandexFotkiApi {
 
-    val baseUrl = "http://api-fotki.yandex.ru/api/users/"
+    private val baseUrl = "http://api-fotki.yandex.ru/api/users/"
 
     override fun getUser(user: String) = Retrofit.Builder()
             .baseUrl(baseUrl)
