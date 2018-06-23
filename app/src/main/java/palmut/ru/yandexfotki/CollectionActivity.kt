@@ -5,11 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_collection.*
 import kotlinx.android.synthetic.main.activity_collection.swipeRefresh
 import kotlinx.android.synthetic.main.activity_collection.toolbar
 import kotlinx.android.synthetic.main.activity_collection.recyclerView
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_collection.collapsingToolbar
 import palmut.ru.yandexfotki.api.Collection
 import palmut.ru.yandexfotki.api.YandexFotkiCollectionPresenter
 import palmut.ru.yandexfotki.api.YandexFotkiPresenter
@@ -59,7 +58,7 @@ class CollectionActivity : AppCompatActivity(), YandexFotkiPresenter.View<Collec
     }
 
     override fun showError(e: Throwable) {
-        Snackbar.make(collectionList, "Error: ${e.message}", Snackbar.LENGTH_LONG).show()
+        Snackbar.make(recyclerView, "Error: ${e.message}", Snackbar.LENGTH_LONG).show()
     }
 
     private fun refresh() {

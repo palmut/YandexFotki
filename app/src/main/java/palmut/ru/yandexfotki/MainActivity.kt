@@ -7,8 +7,14 @@ import android.support.v7.app.AppCompatActivity
 import android.view.ViewGroup.LayoutParams
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.Button
-import kotlinx.android.synthetic.main.activity_main.*
-import palmut.ru.yandexfotki.api.*
+import kotlinx.android.synthetic.main.activity_main.collectionList
+import kotlinx.android.synthetic.main.activity_main.toolbar
+import kotlinx.android.synthetic.main.activity_main.swipeRefresh
+import palmut.ru.yandexfotki.api.YandexFotkiPresenter
+import palmut.ru.yandexfotki.api.YandexFotkiRepo
+import palmut.ru.yandexfotki.api.YandexFotkiUserPresenter
+import palmut.ru.yandexfotki.api.User
+import palmut.ru.yandexfotki.api.CollectionListItem
 
 class MainActivity : AppCompatActivity(), YandexFotkiPresenter.View<User> {
 
